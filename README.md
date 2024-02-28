@@ -6,8 +6,8 @@ This website is designed to host virtual coinflip wagers between users, managed 
 - Christopher Pena
 - Nethan Weerasinghe
 - Garrett Davis
-- Joshane
-- Mukesh
+- Joshane Fernando
+- Mukesh Thamilvanan
 ## Objective:
 The first few weeks will be dedicated to research and planning. Many of the tools we will be using are new to us, so we will work to have a good understanding of them and implement them to a good standard. Our aim is to create a fun and engaging coinflip platform, fostering a sense of community while we develop our skills with real-world technologies.
 ## Tech Stack:
