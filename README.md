@@ -10,6 +10,8 @@ This website is designed to host virtual coinflip wagers between users, managed 
 - Mukesh Thamilvanan
 ## Objective:
 The first few weeks will be dedicated to research and planning. Many of the tools we will be using are new to us, so we will work to have a good understanding of them and implement them to a good standard. Our aim is to create a fun and engaging coinflip platform, fostering a sense of community while we develop our skills with real-world technologies.
+## Figma:
+https://www.figma.com/proto/mRjCJZBPmhgYFBwkociLj0/Coin-Flip-Game?node-id=1-2
 ## Tech Stack:
 - Backend: Django/Python
 - Database: MySQL
