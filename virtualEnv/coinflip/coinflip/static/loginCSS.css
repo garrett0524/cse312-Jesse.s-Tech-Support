@@ -1,0 +1,47 @@
+/* Login Form Styling */
+form {
+    width: 300px;                  
+    margin: 0 auto;                
+}
+
+body {
+    font-family: Inter;
+    text-align: center;            
+    margin: 40px;                  
+    background: #161622;
+}
+
+h2 {
+    color: #FFF;                  
+    text-align: center;           
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+}
+
+label {
+    color: white;                 
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+    width: 100%;                  
+    padding: 10px;                 
+    margin-bottom: 15px;          
+    border: none;                  
+    border-radius: 5px;            
+}
+
+input[type="submit"] {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%); 
+    color: white;                  
+    cursor: pointer;               
+    transition: background-color 0.3s ease; 
+}
+
+input[type="submit"]:hover {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%); 
+}
