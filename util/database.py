@@ -29,6 +29,22 @@ class Database:
         self.cursor.execute(prepared_statement,values)
         self.mydb.commit()
 
+    
+    def valid_login(self,username,password):
+         prepared_statement = "SELECT password FROM login WHERE username = %s"
+         value = (username,)
+         self.cursor.execute(prepared_statement,value)
+         result = self.cursor.fetchall()
+         #If the result is false that means the UserName is incorrect
+         if len(result) == 0:
+              return False
+         pw_in_table = result[0][0]
+        #  the result is the wrong password
+         if pw_in_table != password:
+             return False
+         #If the result is the correct password
+         elif pw_in_table == password:
+             return True
 
 #just testing to see if values are added
 def test1():
@@ -39,5 +55,27 @@ def test1():
         db.add_login("gpdavis", "gpdavis.1")
         db.add_login("joshanef", "joshanef.1")
 
+#checking to see if it retrieve an existing login with both correct values
+def test2():
+     db = Database()
+     result = db.valid_login("dinulawe", "dinulawe.1")
+     assert result == True
+
+#checking to see if it returns false if the username is incorrect
+def test3():
+     db = Database()
+     result = db.valid_login("dinulaw", "dinulawe.1")
+     assert result == False
+
+#checking to see if it returns false if the username if the password is incorrect
+def test4():
+     db = Database()
+     result = db.valid_login("dinulawe", "dinulawe")
+     assert result == False
+
 if __name__ == "__main__":
-     test1()
+    #  test1()
+    test2()
+    test3()
+    test4()
+    pass
