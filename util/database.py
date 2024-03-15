@@ -10,7 +10,7 @@ class Database:
         self.mydb = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="password",
+            password="12345678",
             )
 
         self.cursor = self.mydb.cursor()
@@ -78,4 +78,3 @@ if __name__ == "__main__":
     test2()
     test3()
     test4()
-    pass
