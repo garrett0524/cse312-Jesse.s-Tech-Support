@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'chatCSS.css' %}">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox"></div>
+        <input type="text" class="message-input" id="messageInput" placeholder="Type your message...">
+        <button class="send-button" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var messageInput = document.getElementById('messageInput');
+            var message = messageInput.value.trim();
+            if (message !== '') {
+                var chatBox = document.getElementById('chatBox');
+                var messageElement = document.createElement('p');
+                messageElement.textContent = message;
+                chatBox.appendChild(messageElement);
+                messageInput.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>
