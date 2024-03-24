@@ -1,10 +1,33 @@
-version: '3.8'  
+version: '3.8'
 
 services:
-  web:  
-    build: . 
-    command: python manage.py runserver 0.0.0.0:8080  
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8080
     volumes:
-      - .:/app 
+      - .:/app
     ports:
-      - "8080:8080" 
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SETTINGS_MODULE=coinflip.settings
+      - DATABASE_URL=mysql://root:password@db:3306/coinflip
+    networks:
+      - mynetwork
+
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=coinflip
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+volumes:
+  mysql_data:
+
+networks:
+  mynetwork:
