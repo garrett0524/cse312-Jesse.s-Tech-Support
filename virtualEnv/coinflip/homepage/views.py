@@ -66,20 +66,3 @@ def chat_messages(request):
     messages = Chat_Data.objects.all().values('user', 'message')
     return JsonResponse(list(messages), safe=False)
 
-
-def like_message(request, message_id):
-    if request.method == 'POST':
-        message = get_object_or_404(Chat_Data, id=message_id)
-        user = request.user
-
-        if user.is_authenticated:
-            if user in message.likes.all():
-                message.likes.remove(user)
-                return JsonResponse({'success': True, 'action': 'unliked'})
-            else:
-                message.likes.add(user)
-                return JsonResponse({'success': True, 'action': 'liked'})
-        else:
-            return JsonResponse({'success': False, 'error': 'User not authenticated'})
-    else:
-        return JsonResponse({'success': False, 'error': 'Invalid request method'})
