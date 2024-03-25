@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   db:
     image: mysql:8.0
@@ -7,22 +6,21 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: coinflip
     #volumes:
-    #  - mysql_data:/var/lib/mysql
+    # - mysql_data:/var/lib/mysql
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8080
+    command: /wait && python manage.py runserver 0.0.0.0:8080
     volumes:
       - .:/app
     ports:
       - "8080:8080"
     depends_on:
       - db
-    environment:  # Add this section
-      - DATABASE_URL=mysql://root:password@db:3306/coinflip 
+    environment:
+      DATABASE_URL: mysql://root:password@db:3306/coinflip
     env_file:
-      - .env 
-    
+      - .env
 
 volumes:
   mysql_data:
