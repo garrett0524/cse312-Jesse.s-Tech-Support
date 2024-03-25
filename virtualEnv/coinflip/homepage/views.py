@@ -5,6 +5,7 @@ from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout,authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.utils.html import escape  
 from .models import AuthToken, Chat_Data
 
 def homepage(request):
@@ -55,7 +56,7 @@ def chat(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         user = data.get('user')
-        message = data.get('message')
+        message = escape(data.get('message'))
         Chat_Data.objects.create(user=user, message=message)
         return JsonResponse({'status': 'success'})
     else:
@@ -73,11 +74,9 @@ def like_message(request, message_id):
 
         if user.is_authenticated:
             if user in message.likes.all():
-                # User already liked the message, so unlike it
                 message.likes.remove(user)
                 return JsonResponse({'success': True, 'action': 'unliked'})
             else:
-                # User hasn't liked the message, so like it
                 message.likes.add(user)
                 return JsonResponse({'success': True, 'action': 'liked'})
         else:
