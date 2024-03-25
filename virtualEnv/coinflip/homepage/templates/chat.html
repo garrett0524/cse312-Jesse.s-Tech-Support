@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'chatCSS.css' %}">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            {% for message in messages %}
+                <div class="message">
+                    <p>{{ message.user }}: {{ message.message }}</p>
+                    <button class="like-button" >Like</button>
+                </div>
+            {% endfor %}
+        </div>
+        <input type="text" class="message-input" id="messageInput" placeholder="Type your message...">
+        <button class="send-button" onclick="sendMessage()">Send</button>
+        <button class="home-button" id="homeButton" onclick="redirectToHome()">Home</button>
+    </div>
+
+    <script>
+        var username = '{{ user.username }}';
+        var csrfToken = '{{ csrf_token }}';
+
+        function redirectToHome() {
+            window.location.href = "/";
+        }
+    </script>
+    <script src="{% static 'javascript/chat.js' %}"></script>
+</body>
+</html>

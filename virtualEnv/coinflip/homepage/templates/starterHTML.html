@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coinflip</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'starterCSS.css' %}">
+</head>
+<body>
+    <img src="{% static 'images/coin.png' %}" alt="Coinflip Image" class="top-image">
+    <h1 id="heading">Coinflip</h1>
+    <p>Currently just a static page</p>
+    
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <button onclick="window.location.href='/chat'">Chat</button><br><br>
+        <button onclick="window.location.href='/logout'">Logout</button><br><br>
+    {% else %}
+        <button onclick="window.location.href='/register'">Register</button><br><br>
+        <button onclick="window.location.href='/login'">Login</button><br><br>
+    {% endif %}
+    
+    <button onclick="changeColor('heading', 'yellow')">Click Me!</button><br><br>
+    
+    <p>Logged in as: {% if user.is_authenticated %}{{ user.username }}{% else %}Not Logged In{% endif %}</p>
+    
+    <script src="{% static 'javascript/starter.js' %}"></script>
+</body>
+</html>

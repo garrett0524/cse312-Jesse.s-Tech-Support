@@ -1,0 +1,60 @@
+/* Chat Page Styling */
+.chat-container {
+    width: 400px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #161622;
+    border-radius: 5px;
+}
+
+.chat-box {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.message-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.send-button {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+}
+
+body {
+    font-family: Inter;
+    text-align: center;
+    margin: 40px;
+    background: #161622;
+}
+
+h2 {
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    margin-bottom: 20px;
+}
