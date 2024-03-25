@@ -1,11 +1,11 @@
-import secrets
+import secrets, json
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout,authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import AuthToken
+from .models import AuthToken, Chat_Data
 
 def homepage(request):
     return render(request, "starterHTML.html", {'user': request.user})
@@ -52,7 +52,35 @@ def login_view(request):
             return response
 
 def chat(request):
-    template = loader.get_template("chat.html")
-    return HttpResponse(template.render())
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user = data.get('user')
+        message = data.get('message')
+        Chat_Data.objects.create(user=user, message=message)
+        return JsonResponse({'status': 'success'})
+    else:
+        return render(request, "chat.html")
+
+def chat_messages(request):
+    messages = Chat_Data.objects.all().values('user', 'message')
+    return JsonResponse(list(messages), safe=False)
 
 
+def like_message(request, message_id):
+    if request.method == 'POST':
+        message = get_object_or_404(Chat_Data, id=message_id)
+        user = request.user
+
+        if user.is_authenticated:
+            if user in message.likes.all():
+                # User already liked the message, so unlike it
+                message.likes.remove(user)
+                return JsonResponse({'success': True, 'action': 'unliked'})
+            else:
+                # User hasn't liked the message, so like it
+                message.likes.add(user)
+                return JsonResponse({'success': True, 'action': 'liked'})
+        else:
+            return JsonResponse({'success': False, 'error': 'User not authenticated'})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})

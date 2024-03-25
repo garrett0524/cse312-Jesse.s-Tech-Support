@@ -7,24 +7,27 @@
 </head>
 <body>
     <div class="chat-container">
-        <div class="chat-box" id="chatBox"></div>
+        <div class="chat-box" id="chatBox">
+            {% for message in messages %}
+                <div class="message">
+                    <p>{{ message.user }}: {{ message.message }}</p>
+                    <button class="like-button" onclick="likeMessage('{{ message.id }}')">Like</button>
+                </div>
+            {% endfor %}
+        </div>
         <input type="text" class="message-input" id="messageInput" placeholder="Type your message...">
         <button class="send-button" onclick="sendMessage()">Send</button>
+        <button class="home-button" id="homeButton" onclick="redirectToHome()">Home</button>
     </div>
 
     <script>
-        function sendMessage() {
-            var messageInput = document.getElementById('messageInput');
-            var message = messageInput.value.trim();
-            if (message !== '') {
-                var chatBox = document.getElementById('chatBox');
-                var messageElement = document.createElement('p');
-                messageElement.textContent = message;
-                chatBox.appendChild(messageElement);
-                messageInput.value = '';
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
+        var username = '{{ user.username }}';
+        var csrfToken = '{{ csrf_token }}';
+
+        function redirectToHome() {
+            window.location.href = "/";
         }
     </script>
+    <script src="{% static 'javascript/chat.js' %}"></script>
 </body>
 </html>
