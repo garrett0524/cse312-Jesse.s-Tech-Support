@@ -2,6 +2,15 @@
 This website is designed to host virtual coinflip wagers between users, managed with virtual currency. We plan to incorporate statistics for each user, a leaderboard, rewards and more.
 
 
+## How To Run App:
+- Navigate to the /virtualEnv/coinflip directory and run "docker-compose up"
+## How To Access Database:
+- Once you are at localhost:8080
+- Navigate to localhost:8080/admin
+- Credentials:
+  user: admin
+  password: password
+- Navigate any of the tables
 ## Team Members:
 - Christopher Pena
 - Nethan Weerasinghe
@@ -29,5 +38,3 @@ https://www.figma.com/proto/mRjCJZBPmhgYFBwkociLj0/Coin-Flip-Game?node-id=1-2
 ## Leaderboard:
 - List of users
 - Sorted by virtual currency balance
-## How To Run App:
-- Navigate to the /virtualEnv/coinflip directory and run "docker-compose up"
