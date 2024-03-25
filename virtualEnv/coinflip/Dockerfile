@@ -9,6 +9,8 @@ COPY requirements.txt .
 
 # Install the project dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && apt-get install -y iputils-ping 
+
 
 # Copy the project files to the working directory
 COPY . .

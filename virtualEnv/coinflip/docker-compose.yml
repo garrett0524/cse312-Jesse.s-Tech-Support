@@ -5,16 +5,17 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: coinflip
-    #volumes:
-    #  - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8080
+    command: >
+      sh -c "python manage.py migrate &&
+             echo \"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'password')\" | python manage.py shell &&
+             python manage.py runserver 0.0.0.0:8080"
     volumes:
       - .:/app
     ports:
