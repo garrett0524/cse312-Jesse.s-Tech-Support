@@ -29,6 +29,7 @@ https://www.figma.com/proto/mRjCJZBPmhgYFBwkociLj0/Coin-Flip-Game?node-id=1-2
 - Two-player matchups
 - Wagers with equal amounts of virtual currency
 - Heads or tails selection
+- Global Chat
 - Game creation (picking a side)
 - Joining existing games (picking the opposite side)
 ## Stats Page:
