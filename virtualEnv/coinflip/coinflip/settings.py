@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'homepage'
+    'homepage',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +80,6 @@ DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
         conn_max_age=600,
-        #ssl_require=True
     )
 }
 

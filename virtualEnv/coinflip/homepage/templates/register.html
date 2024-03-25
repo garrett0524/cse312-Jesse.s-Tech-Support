@@ -9,19 +9,16 @@
 </head>
 <body>
     <h2>Registration Form</h2>
-    <form>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br>
-        
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br>
-        
-        <label for="confirm_password">Confirm Password:</label><br>
-        <input type="password" id="confirm_password" name="confirm_password"><br><br>
-        
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_username">Username:</label><br>
+        <input type="text" id="id_username" name="username" required><br>
+        <label for="id_email">Email:</label><br>
+        <input type="email" id="id_email" name="email" required><br>
+        <label for="id_password1">Password:</label><br>
+        <input type="password" id="id_password1" name="password1" required><br>
+        <label for="id_password2">Confirm Password:</label><br>
+        <input type="password" id="id_password2" name="password2" required><br><br>
         <input type="submit" value="Submit">
     </form>
 </body>
