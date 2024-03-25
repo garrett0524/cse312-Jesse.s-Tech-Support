@@ -29,3 +29,6 @@ https://www.figma.com/proto/mRjCJZBPmhgYFBwkociLj0/Coin-Flip-Game?node-id=1-2
 ## Leaderboard:
 - List of users
 - Sorted by virtual currency balance
+# How To Run App:
+Navigate to the /virtualEnv/coinflip directory and run "docker-compose up"
+
