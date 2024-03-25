@@ -4,6 +4,7 @@ This website is designed to host virtual coinflip wagers between users, managed 
 
 ## How To Run App:
 - Navigate to the /virtualEnv/coinflip directory and run "docker-compose up"
+- Please be patient while database is ready for web to connect (May take up to 30 seconds). Thank you in advance! 
 ## How To Access Database:
 - Once you are at localhost:8080
 - Navigate to localhost:8080/admin
