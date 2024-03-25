@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout,authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.utils.html import escape  
-from .models import AuthToken, Chat_Data
+from .models import Chat_Data
 
 def homepage(request):
     return render(request, "starterHTML.html", {'user': request.user})
@@ -47,7 +47,6 @@ def login_view(request):
         if user is not None:
             login(request, user)
             token = secrets.token_hex(32)
-            AuthToken.objects.create(user=user, token=token)
             response = redirect('homepage')
             response.set_cookie('auth_token', token, httponly=True)
             return response
