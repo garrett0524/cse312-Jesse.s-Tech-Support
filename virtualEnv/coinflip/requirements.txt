@@ -1,1 +1,4 @@
 Django
+mysqlclient
+dj-database-url
+python-decouple
