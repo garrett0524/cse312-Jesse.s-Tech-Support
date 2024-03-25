@@ -18,8 +18,4 @@ EXPOSE 8080
 
 # Run the Django development server
 
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
-RUN chmod +x /wait
-
-
-CMD /wait && python manage.py runserver 0.0.0.0:8080
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]

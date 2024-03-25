@@ -6,19 +6,24 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: coinflip
     #volumes:
-    # - mysql_data:/var/lib/mysql
+    #  - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
 
   web:
     build: .
-    command: /wait && python manage.py runserver 0.0.0.0:8080
+    command: python manage.py runserver 0.0.0.0:8080
     volumes:
       - .:/app
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
-      DATABASE_URL: mysql://root:password@db:3306/coinflip
+      - DATABASE_URL=mysql://root:password@db:3306/coinflip
     env_file:
       - .env
 
