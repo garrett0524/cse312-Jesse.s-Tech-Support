@@ -1,9 +1,8 @@
 from django.contrib import admin
-from .models import AuthToken
-from .models import AuthToken, Chat_Data
+from .models import Chat_Data, UserProfile
 
 
 # Register your models here.
 
-admin.site.register(AuthToken)
 admin.site.register(Chat_Data)
+admin.site.register(UserProfile)
