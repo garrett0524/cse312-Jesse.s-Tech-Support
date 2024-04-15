@@ -1,0 +1,50 @@
+body {
+    font-family: Inter;
+    text-align: center;
+    margin: 40px;
+    background: #161622;
+  }
+  
+  h1, h2, h3, p {
+    color: #FFF;
+    font-family: Inter;
+  }
+  
+  button {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .profile-info {
+    margin-bottom: 30px;
+  }
+  
+  .profile-picture {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .stats {
+    margin-bottom: 30px;
+  }

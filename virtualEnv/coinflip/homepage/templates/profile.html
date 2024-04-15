@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile Page</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'profileCSS.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Profile Page</h1>
+    <div class="profile-info">
+      <div class="profile-picture">
+        <img src="{% static 'images/default-profile.png' %}" alt="Profile Picture" id="profilePicture">
+        <input type="file" id="pictureUpload" accept="image/*" style="display: none;">
+        <button onclick="document.getElementById('pictureUpload').click()">Upload Picture</button>
+      </div>
+      <h2 id="username">{{ user.username }}</h2>
+      <p id="bio">{{ user.userprofile.bio }}</p>
+      <button onclick="editProfile()">Edit Profile</button>
+    </div>
+    <div class="stats">
+      <h3>Stats</h3>
+      <p>Currency: {{ user.userprofile.currency }}</p>
+      <!-- Add more stats from UserProfile model -->
+    </div>
+    <button onclick="window.location.href='/'">Back to Home</button>
+  </div>
+  <script src="{% static 'javascript/profile.js' %}"></script>
+</body>
+</html>

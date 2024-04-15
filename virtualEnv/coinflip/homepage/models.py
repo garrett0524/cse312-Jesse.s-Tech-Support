@@ -7,6 +7,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Add any additional fields you need for the user profile
     currency = models.IntegerField(default=100000)
+    bio = models.TextField(default="No bio provided")
 
 
     # This will display the user's username in the admin panel
