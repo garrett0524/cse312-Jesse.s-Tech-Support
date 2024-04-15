@@ -65,3 +65,6 @@ def chat_messages(request):
     messages = Chat_Data.objects.all().values('user', 'message')
     return JsonResponse(list(messages), safe=False)
 
+def profile_view(request):
+    user = request.user
+    return render(request, 'profile.html', {'user': user})
