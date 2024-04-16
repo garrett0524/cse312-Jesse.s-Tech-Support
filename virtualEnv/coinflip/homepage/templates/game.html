@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coinflip Duel - Game Page</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'gameCSS.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Coinflip Duel</h1>
+    <div class="balance">
+      <p>Your Balance: {{ user.userprofile.currency }}</p>
+    </div>
+    <div class="game-list">
+      <h2>Game List</h2>
+      <ul id="gameList">
+        <!-- Game list will be populated dynamically -->
+      </ul>
+      <button id="createGame">Create Game</button>
+    </div>
+    <div class="navigation">
+      <button onclick="window.location.href='/'">Home</button>
+    </div>
+  </div>
+  <script src="{% static 'javascript/game.js' %}"></script>
+</body>
+</html>

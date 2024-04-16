@@ -68,3 +68,6 @@ def chat_messages(request):
 def profile_view(request):
     user = request.user
     return render(request, 'profile.html', {'user': user})
+
+def game_view(request):
+    return render(request, 'game.html')
