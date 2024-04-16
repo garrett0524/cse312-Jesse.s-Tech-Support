@@ -10,18 +10,21 @@
     <h1>Profile Page</h1>
     <div class="profile-info">
       <div class="profile-picture">
-        <img src="{% static 'images/default-profile.png' %}" alt="Profile Picture" id="profilePicture">
+        <!-- Display the user's profile picture -->
+        <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile Picture" id="profilePicture">
+        <!-- Allow the user to upload a new profile picture -->
         <input type="file" id="pictureUpload" accept="image/*" style="display: none;">
         <button onclick="document.getElementById('pictureUpload').click()">Upload Picture</button>
       </div>
       <h2 id="username">{{ user.username }}</h2>
-      <p id="bio">{{ user.userprofile.bio }}</p>
-      <button onclick="editProfile()">Edit Profile</button>
+      <!-- Display and allow editing of the users bio -->
+      <p id="bio" contenteditable="true">{{ user.userprofile.bio }}</p>
+      <button onclick="saveBio()">Save Bio</button> <!-- Added a button to save the bio -->
     </div>
     <div class="stats">
       <h3>Stats</h3>
       <p>Currency: {{ user.userprofile.currency }}</p>
-      <!-- Add more stats from UserProfile model -->
+      <!-- Add more stats from UserProfile model if we need -->
     </div>
     <button onclick="window.location.href='/'">Back to Home</button>
   </div>
