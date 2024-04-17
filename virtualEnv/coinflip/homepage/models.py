@@ -8,6 +8,8 @@ class UserProfile(models.Model):
     currency = models.IntegerField(default=100000)
     bio = models.TextField(default="No bio provided")
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    wins = models.IntegerField(default= 0)
+    loses = models.IntegerField(default= 0)
 
 
     # This will display the user's username in the admin panel
