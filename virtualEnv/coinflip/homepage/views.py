@@ -1,12 +1,15 @@
 import secrets, json
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout,authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.utils.html import escape  
-from .models import Chat_Data
+from .models import Chat_Data, UserProfile
+from .forms import ProfilePictureForm
+from django.views.decorators.csrf import csrf_exempt
+
 
 def homepage(request):
     return render(request, "starterHTML.html", {'user': request.user})
@@ -71,3 +74,16 @@ def profile_view(request):
 
 def game_view(request):
     return render(request, 'game.html')
+
+def upload_profile_picture(request):
+    if request.method == 'POST':
+        form = ProfilePictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+            user_profile.profile_picture = form.cleaned_data['profile_picture']
+            user_profile.save()
+            return JsonResponse({'message': 'Profile picture uploaded successfully'})
+        else:
+            return JsonResponse({'error': 'Invalid form data'}, status=400)
+    else:
+        return JsonResponse({'error': 'Not a valid POST request'}, status=400)
