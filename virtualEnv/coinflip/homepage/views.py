@@ -75,7 +75,6 @@ def profile_view(request):
 def game_view(request):
     return render(request, 'game.html')
 
-@csrf_exempt
 def upload_profile_picture(request):
     if request.method == 'POST':
         form = ProfilePictureForm(request.POST, request.FILES)
