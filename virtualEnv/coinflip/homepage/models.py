@@ -8,6 +8,9 @@ class UserProfile(models.Model):
     # Add any additional fields you need for the user profile
     currency = models.IntegerField(default=100000)
     bio = models.TextField(default="No bio provided")
+    wins = models.IntegerField(default= 0)
+    loses = models.IntegerField(default= 0)
+    profile_picture = models.TextField(default= "virtualEnv/coinflip/coinflip/static/images/default-profile.png")
 
 
     # This will display the user's username in the admin panel
