@@ -19,7 +19,7 @@ services:
              python manage.py shell < create_superuser.py &&
              python manage.py runserver 0.0.0.0:8080"
     volumes:
-      - .:/app
+      - web_data:/app
     ports:
       - "8080:8080"
     depends_on:
@@ -32,3 +32,4 @@ services:
 
 volumes:
   mysql_data:
+  web_data:
