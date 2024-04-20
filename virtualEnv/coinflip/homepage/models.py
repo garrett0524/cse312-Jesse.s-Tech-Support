@@ -26,3 +26,16 @@ class Chat_Data(models.Model):
     user = models.CharField(max_length = 50)
     message = models.CharField(max_length = 200)
     likes = models.ManyToManyField(User, related_name='liked_messages')
+
+class Player(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=1)
+    currency = models.IntegerField(default=0)
+    wins = models.IntegerField(default=0)
+    loses = models.IntegerField(default=0)
+    side = models.CharField(max_length=10)
+
+class Game(models.Model):
+    player1 = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='created_games')
+    player2 = models.ForeignKey(Player, on_delete=models.SET_NULL, related_name='joined_games', null=True, blank=True)
+    bet = models.IntegerField(default=0)
+    completed = models.BooleanField(default=False)
