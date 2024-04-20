@@ -8,11 +8,12 @@
 <body>
     <img src="{% static 'images/coin.png' %}" alt="Coinflip Image" class="top-image">
     <h1 id="heading">Coinflip</h1>
-    <p>Currently just a static page</p>
     
     {% if user.is_authenticated %}
         <p>Welcome, {{ user.username }}!</p>
+        <button onclick="window.location.href='/lobby'">Play</button><br><br>
         <button onclick="window.location.href='/chat'">Chat</button><br><br>
+        <button onclick="window.location.href='/profile'">Profile</button><br><br>
         <button onclick="window.location.href='/logout'">Logout</button><br><br>
     {% else %}
         <button onclick="window.location.href='/register'">Register</button><br><br>

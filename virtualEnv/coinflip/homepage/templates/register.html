@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
     <link rel="stylesheet" type="text/css" href="{% static 'registerCSS.css' %}">
+    <style>
+        .field-requirements {
+            color: white;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
     <h2>Registration Form</h2>
@@ -13,10 +20,28 @@
         {% csrf_token %}
         <label for="id_username">Username:</label><br>
         <input type="text" id="id_username" name="username" required><br>
+        <div class="field-requirements">
+            - Required<br>
+            - Must be unique<br>
+            - Maximum length: 150 characters<br>
+        </div>
+
         <label for="id_password1">Password:</label><br>
         <input type="password" id="id_password1" name="password1" required><br>
+        <div class="field-requirements">
+            - Your password can't be too similar to your other personal information (e.g username)<br>
+            - Your password must contain at least 8 characters.<br>
+            - Your password can't be a commonly used password.<br>
+            - Your password can't be entirely numeric.<br>
+        </div>
+
         <label for="id_password2">Confirm Password:</label><br>
-        <input type="password" id="id_password2" name="password2" required><br><br>
+        <input type="password" id="id_password2" name="password2" required><br>
+        <div class="field-requirements">
+            - Required<br>
+            - Must match the password entered above<br>
+        </div>
+
         <input type="submit" value="Submit">
     </form>
 </body>

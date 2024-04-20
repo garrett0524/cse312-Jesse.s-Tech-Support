@@ -1,0 +1,83 @@
+/* gameCSS.css */
+
+body {
+    font-family: Inter;
+    text-align: center;
+    margin: 40px;
+    background: #161622;
+  }
+  
+  h1, h2, p {
+    color: #FFF;
+    font-family: Inter;
+  }
+  
+  button {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .balance {
+    margin-bottom: 30px;
+  }
+  
+  .game-list {
+    margin-bottom: 30px;
+  }
+  
+  .game-list h2 {
+    margin-bottom: 20px;
+  }
+  
+  .game-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .game-list li {
+    background: #1E1E2E;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .game-list li span {
+    color: #FFF;
+  }
+  
+  .game-list li button {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .game-list li button:hover {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }

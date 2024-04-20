@@ -8,5 +8,12 @@ urlpatterns = [
     path('chat', views.chat,name='chat'),
     path('chat_messages', views.chat_messages, name='chat_messages'),
     path('logout/', views.logout_view, name='logout'),
+    path('profile/', views.profile_view, name='profile_view'),
+    path('game/', views.game_view, name='game'),
+    path('upload_profile_picture/', views.upload_profile_picture, name='upload_profile_picture'),
+    path('lobby/', views.lobby_view, name='lobby'),
+    path('create_game/', views.create_game, name='create_game'),
+    path('game_list/', views.game_list, name='game_list'),
+    path('play_game/<int:game_id>/', views.play_game, name='play_game'),
 
 ]

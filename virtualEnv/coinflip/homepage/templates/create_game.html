@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coinflip - Create Game</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'starterCSS.css' %}">
+</head>
+<body>
+    <img src="{% static 'images/coin.png' %}" alt="Coinflip Image" class="top-image">
+    <h1 id="heading">Create Game</h1>
+    
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <p>Balance: {{ user.userprofile.currency }}</p>
+        
+        <form method="post" action="/create_game/">
+            {% csrf_token %}
+            <label for="side">Select Side:</label>
+            <select name="side" id="side">
+                <option value="heads">Heads</option>
+                <option value="tails">Tails</option>
+            </select><br><br>
+            
+            <label for="bet">Enter Bet Amount:</label>
+            <input type="number" name="bet" id="bet" required><br><br>
+            
+            <button type="submit">Create Game</button>
+        </form>
+        
+        <button onclick="window.location.href='/lobby'">Back to lobby List</button><br><br>
+        
+    {% else %}
+        <p>Please login to create a game.</p>
+        <button onclick="window.location.href='/login'">Login</button><br><br>
+    {% endif %}
+    
+    <script src="{% static 'javascript/starter.js' %}"></script>
+</body>
+</html>
