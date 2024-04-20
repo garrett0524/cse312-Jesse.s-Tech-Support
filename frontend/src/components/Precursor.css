@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Kreon:wght@300..700&display=swap');
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #161622;
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 380px;
+    height: 85%;
+    background: #101019;
+    padding: 58px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Josefin Sans;
+  }
+  
+  .logo {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    margin-bottom: 58px;
+  }
+  
+  
+  .title {
+    position: relative;
+    bottom: 135px;
+    right: 40px;
+    color: white;
+    font-size: 24px;
+    font-family: Inter;
+    font-weight: 200;
+    margin-bottom: 58px;
+
+  }
+
+  .smallCoin{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  
+  .divider {
+    position: relative;
+    width: 380px;
+    border: 1px rgba(255, 255, 255, 0.21) solid;
+    margin-bottom: 58px;
+    bottom: 170px;
+  }
+  
+  .menu-item {
+    color: white;
+    font-size: 35px;
+    font-family: Josefin Sans;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  
+  .logout {
+    font-size: 18px;
+    font-family: Josefin Sans;
+    position: relative;
+    bottom: -260px;
+    right: 130px;
+    cursor: pointer;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 115px 20px;
+    align-items: center;
+    text-align: center;
+
+  }
+  
+  .box {
+    width: 95%;
+    height: 250px;
+    background: #101019;
+    border: 1px white solid;
+    margin-bottom: 29px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+  }
+  
+  .list-item {
+    width: 95%;
+    height: 50px;
+    background: #D9D9D9;
+    border-radius: 100px;
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-bottom: 29px;
+  }
+  
+  .username,
+  .choice,
+  .amount {
+    color: black;
+    font-size: 35px;
+    font-family: 'Josefin Sans';
+    font-weight: 400;
+    text-align: center; 
+  }
+  
+  
+  .balance,
+  .wins,
+  .losses {
+    color: white;
+    font-size: 35px;
+    font-family: 'Josefin Sans';
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+  
+  .create-game {
+    width: 362px;
+    height: 53px;
+    background: linear-gradient(180deg, #39E373 0%, #63B0A7 100%);
+    border-radius: 100px;
+    color: black;
+    font-size: 35px;
+    font-family: 'Josefin Sans';
+    font-weight: 400;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+  }

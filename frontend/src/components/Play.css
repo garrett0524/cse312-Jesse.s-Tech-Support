@@ -1,0 +1,100 @@
+.coin-flip-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
+  .amount-label {
+    position: relative;
+    font-size: 30px;
+    font-family: 'Josefin Sans';
+    font-weight: 400;
+    margin-bottom: 20px;
+    top: 340px;
+    right: 295px;
+
+  }
+  
+  .coin-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .coin-button {
+    background: linear-gradient(180deg, #E3BE39 0%, #CAC0A0 100%);
+    width: 150px;
+    border-radius: 13px;
+    color: white;
+    font-size: 45px;
+    font-family: 'Itim';
+    font-weight: 400;
+    padding: 15px 35px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .quarter {
+    width: 300px;
+    height: auto;
+    position: inherit;
+    margin: 0 20px;
+  }
+  
+  .amount-options {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 40px;
+  }
+  
+  .amount-option {
+    background: #353551;
+    border-radius: 13px;
+    color: white;
+    font-size: 25px;
+    font-family: 'Inter';
+    font-weight: 400;
+    padding: 10px 20px;
+    margin: 0 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .amount-option > div {
+    background: #F3BA2F;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .amount-option > div > div {
+    background: white;
+    width: 18.75px;
+    height: 18.75px;
+    border-radius: 50%;
+  }
+  
+  .flip-button {
+    background: linear-gradient(180deg, #39E373 0%, #63B0A7 100%);
+    border-radius: 104px;
+    color: #FFFAFA;
+    font-size: 50px;
+    font-family: 'Josefin Sans';
+    font-weight: 400;
+    padding: 20px 45px;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
