@@ -2,3 +2,5 @@ Django
 mysqlclient
 dj-database-url
 python-decouple
+channels
+channels-redis

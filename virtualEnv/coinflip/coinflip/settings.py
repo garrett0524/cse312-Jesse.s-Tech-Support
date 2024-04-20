@@ -81,14 +81,14 @@ TEMPLATES = [
 
 
 CHANNEL_LAYERS = {
-       'default': {
-           'BACKEND': 'channels_redis.core.RedisChannelLayer',
-           'CONFIG': {
-               'hosts': [('127.0.0.1', 8080)],
-           },
-       },
-   }
-WSGI_APPLICATION = 'coinflip.wsgi.application'
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(os.environ.get('REDIS_HOST', '127.0.0.1'), int(os.environ.get('REDIS_PORT', 6379)))],
+        },
+    },
+}
+#WSGI_APPLICATION = 'coinflip.wsgi.application'
 ASGI_APPLICATION = 'coinflip.asgi.application'
 
 
