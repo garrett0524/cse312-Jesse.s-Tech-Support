@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coinflip - Game List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'starterCSS.css' %}">
+</head>
+<body>
+    <img src="{% static 'images/coin.png' %}" alt="Coinflip Image" class="top-image">
+    <h1 id="heading">Coinflip - Game List</h1>
+    
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <p>Balance: {{ user.userprofile.currency }}</p>
+        <p>Wins: {{ user.userprofile.wins }}</p>
+        <p>Losses: {{ user.userprofile.loses }}</p>
+        
+        <button onclick="window.location.href='/create_game'">Create New Game</button><br><br>
+        
+        <h2>Game List</h2>
+        {% if games %}
+        <ul class="game-list">
+            {% for game in games %}
+            <li style="color: #FFF;"> 
+                Game ID: {{ game.id }}<br>
+                Player: {{ game.player1.user_profile.user.username }}<br>
+                Side: {{ game.player1.side }}<br>
+                Bet: {{ game.bet }}<br>
+                <button onclick="window.location.href='/play_game/{{ game.id }}/'">Play</button>
+            </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+        <p>No games available.</p>
+        {% endif %}
+        
+        <button onclick="window.location.href='/'">Back to Homepage</button><br><br>
+        
+    {% else %}
+        <p>Please login to access the game list.</p>
+        <button onclick="window.location.href='/login'">Login</button><br><br>
+    {% endif %}
+    
+    <script src="{% static 'javascript/starter.js' %}"></script>
+</body>
+</html>
