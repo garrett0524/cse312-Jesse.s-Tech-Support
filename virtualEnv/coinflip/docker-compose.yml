@@ -37,11 +37,19 @@ services:
       - REDIS_PORT=6379
     env_file:
       - .env
+    restart: always
+    networks:
+      - app-network
 
   redis:
     image: redis
-    ports:
-      - "6379:6379"
+    restart: always
+    networks:
+      - app-network
 
 volumes:
   mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
