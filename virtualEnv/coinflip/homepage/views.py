@@ -7,6 +7,7 @@ from django.contrib.auth import logout,authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.utils.html import escape  
 from .models import Chat_Data, UserProfile, Player, Game
+from .realtime import update_game_list, update_balance
 from .forms import ProfilePictureForm
 from django.views.decorators.csrf import csrf_exempt
 
@@ -110,14 +111,18 @@ def create_game(request):
         if request.user.is_authenticated:
             side = request.POST.get('side')
             bet = int(request.POST.get('bet'))
-            
             user_profile = request.user.userprofile
             if user_profile.currency >= bet:
                 player = Player.objects.create(user_profile=user_profile, side=side)
                 Game.objects.create(player1=player, bet=bet)
-                
                 user_profile.currency -= bet
                 user_profile.save()
+                
+                # Get the updated game list data
+                game_list_data = Game.objects.filter(completed=False).values()
+                
+                # Trigger the real-time update for the game list
+                update_game_list(game_list_data)
                 
                 return redirect('/lobby')
             else:
@@ -147,24 +152,20 @@ def game_list(request):
     
 def play_game(request, game_id):
     game = get_object_or_404(Game, id=game_id)
-    
     if request.method == 'POST':
         if request.user.is_authenticated:
             if game.player1.user_profile.user != request.user and not game.completed:
                 user_profile = request.user.userprofile
-                
                 if game.player1.side == 'heads':
                     player2_side = 'tails'
                 else:
                     player2_side = 'heads'
-                
                 player2 = Player.objects.create(user_profile=user_profile, side=player2_side)
                 game.player2 = player2
                 game.save()
-                
                 winning_side = random.choice(['heads', 'tails'])
                 if winning_side == game.player2.side:
-                    game.player2.user_profile.currency += game.bet 
+                    game.player2.user_profile.currency += game.bet
                     game.player2.user_profile.wins += 1
                     game.player1.user_profile.loses += 1
                     result = 'win'
@@ -174,11 +175,24 @@ def play_game(request, game_id):
                     game.player1.user_profile.wins += 1
                     game.player2.user_profile.loses += 1
                     result = 'lose'
-                
                 game.player1.user_profile.save()
                 game.player2.user_profile.save()
                 game.completed = True
                 game.save()
+                
+                # Get the updated balance data for both players
+                player1_balance = game.player1.user_profile.currency
+                player2_balance = game.player2.user_profile.currency
+                
+                # Trigger the real-time update for the balances
+                update_balance(game.player1.user_profile.user.id, player1_balance)
+                update_balance(game.player2.user_profile.user.id, player2_balance)
+                
+                # Get the updated game list data
+                game_list_data = Game.objects.filter(completed=False).values()
+                
+                # Trigger the real-time update for the game list
+                update_game_list(game_list_data)
                 
                 return render(request, 'play_game.html', {'game': game, 'result': result})
             else:
@@ -187,3 +201,15 @@ def play_game(request, game_id):
             return redirect('/login')
     else:
         return render(request, 'play_game.html', {'game': game})
+    
+def get_user_data(request):
+    if request.user.is_authenticated:
+        user_profile = request.user.userprofile
+        data = {
+            'balance': user_profile.currency,
+            'wins': user_profile.wins,
+            'losses': user_profile.loses,
+        }
+        return JsonResponse(data)
+    else:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)

@@ -1,0 +1,60 @@
+/* General Styling */
+body {
+    font-family: Inter;
+    text-align: center;
+    margin: 40px;
+    background: #161622;
+}
+
+h1 {
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+}
+
+p {
+    font-family: Inter;
+    color: #FFF;
+}
+
+button {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%);
+    color: white;
+    padding: 15px 30px; /* Make the buttons a lil larger */
+    border: none;
+    border-radius: 5px; /* rounded corners */
+    cursor: pointer; /* the button is clickable */
+    transition: background-color 0.3s ease; /* hover effect */
+}
+
+button:hover {
+    background: linear-gradient(90deg, #39E373 0%, #63B0A7 100%); /* Same gradient on hover */
+}
+
+.top-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+ul {
+    color: #FFF;
+}
+
+#countdown {
+    color: #FFF !important
+}
+
+.game-list li {
+    color: #FFF;
+}
+
+li {
+    color: #FFF !important;
+}
