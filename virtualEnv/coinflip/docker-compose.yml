@@ -16,6 +16,7 @@ services:
     command: >
       sh -c "python manage.py makemigrations &&
              python manage.py migrate &&
+             python websocket_server.py &&
              python manage.py shell < create_superuser.py &&
              python manage.py runserver 0.0.0.0:8080"
     volumes:
