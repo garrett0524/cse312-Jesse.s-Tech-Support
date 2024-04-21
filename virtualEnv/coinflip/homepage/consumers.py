@@ -20,8 +20,8 @@ class GameListConsumer(WebsocketConsumer):
 
     def send_game_list(self, event):
         # Send updated game list to the client
-        self.send(text_data=json.dumps(event['game_list']))
+        self.send(text_data=json.dumps(event))
 
     def send_balance(self, event):
         # Send updated balance to the client
-        self.send(text_data=json.dumps(event['balance']))
+        self.send(text_data=json.dumps(event))

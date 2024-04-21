@@ -4,3 +4,4 @@ dj-database-url
 python-decouple
 channels
 channels-redis
+whitenoise

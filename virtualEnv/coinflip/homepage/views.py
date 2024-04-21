@@ -201,3 +201,15 @@ def play_game(request, game_id):
             return redirect('/login')
     else:
         return render(request, 'play_game.html', {'game': game})
+    
+def get_user_data(request):
+    if request.user.is_authenticated:
+        user_profile = request.user.userprofile
+        data = {
+            'balance': user_profile.currency,
+            'wins': user_profile.wins,
+            'losses': user_profile.loses,
+        }
+        return JsonResponse(data)
+    else:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
