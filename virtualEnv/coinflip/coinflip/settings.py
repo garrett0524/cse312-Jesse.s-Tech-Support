@@ -35,7 +35,7 @@ SECRET_KEY = 'django-insecure-zykaz^xnr1jluuz(f9oe2muy#h6_335x_vr3vho1u14^eu5smp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['flipduel.me']
 
 
 # Application definition
