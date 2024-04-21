@@ -60,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'coinflip.middleware.nosniff_middleware.NoSniffMiddleware',
+    'coinflip.middleware.static_nosniff_middleware.StaticNoSniffMiddleware',
 ]
 
 ROOT_URLCONF = 'coinflip.urls'
@@ -145,6 +147,8 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATICFILES_DIRS = [
     BASE_DIR / "coinflip/static",
+    BASE_DIR / "coinflip/static/images",
+    BASE_DIR / "coinflip/static/javascript",
 ]
 
 
