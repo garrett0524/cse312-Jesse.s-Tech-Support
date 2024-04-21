@@ -17,9 +17,8 @@ This website is designed to host virtual coinflip wagers between users, managed 
 - Nethan Weerasinghe
 - Garrett Davis
 - Joshane Fernando
-- Mukesh Thamilvanan
-## Objective:
-The first few weeks will be dedicated to research and planning. Many of the tools we will be using are new to us, so we will work to have a good understanding of them and implement them to a good standard. Our aim is to create a fun and engaging coinflip platform, fostering a sense of community while we develop our skills with real-world technologies.
+## Websockets:
+The core functionality of the project takes place inside the "play" button which takes you to the core gameplay. Here we use websocket interactions between users to get the latest game created from another user. When created a user can click to play, and test their luck. 
 ## Figma:
 https://www.figma.com/proto/mRjCJZBPmhgYFBwkociLj0/Coin-Flip-Game?node-id=1-2
 ## Tech Stack:
