@@ -10,11 +10,13 @@ from .models import Chat_Data, UserProfile, Player, Game
 from .realtime import update_game_list, update_balance
 from .forms import ProfilePictureForm
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 
 
 def homepage(request):
     return render(request, "starterHTML.html", {'user': request.user})
 
+@csrf_protect
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -25,6 +27,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
+@csrf_protect
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -43,6 +46,7 @@ def logout_view(request):
     logout(request)
     return redirect('homepage')
 
+@csrf_protect
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -55,6 +59,7 @@ def login_view(request):
             response.set_cookie('auth_token', token, httponly=True)
             return response
 
+@csrf_protect
 def chat(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -93,6 +98,7 @@ def lobby_view(request):
     else:
         return redirect('/login')
 
+@csrf_protect
 def upload_profile_picture(request):
     if request.method == 'POST':
         form = ProfilePictureForm(request.POST, request.FILES)
@@ -105,7 +111,8 @@ def upload_profile_picture(request):
             return JsonResponse({'error': 'Invalid form data'}, status=400)
     else:
         return JsonResponse({'error': 'Not a valid POST request'}, status=400)
-    
+
+@csrf_protect    
 def create_game(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
