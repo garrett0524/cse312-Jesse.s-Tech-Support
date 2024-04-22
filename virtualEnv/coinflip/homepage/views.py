@@ -10,6 +10,7 @@ from .models import Chat_Data, UserProfile, Player, Game
 from .realtime import update_game_list, update_balance
 from .forms import ProfilePictureForm
 from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_protect
 
 
@@ -103,8 +104,11 @@ def upload_profile_picture(request):
     if request.method == 'POST':
         form = ProfilePictureForm(request.POST, request.FILES)
         if form.is_valid():
+            profile_picture = form.cleaned_data['profile_picture']
+            if profile_picture.size > 2 * 1024 * 1024:  # 2 MB in bytes
+                return JsonResponse({'error': 'File size exceeds the limit of 2 MB'}, status=400)
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-            user_profile.profile_picture = form.cleaned_data['profile_picture']
+            user_profile.profile_picture = profile_picture
             user_profile.save()
             return JsonResponse({'message': 'Profile picture uploaded successfully'})
         else:
