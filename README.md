@@ -1,6 +1,8 @@
 # CSE312 - Coinflip Website
 This website is designed to host virtual coinflip wagers between users, managed with virtual currency. We plan to incorporate statistics for each user, a leaderboard, rewards and more.
 
+## Website link:
+- http://flipduel.me/
 
 ## How To Run App:
 - Navigate to the /virtualEnv/coinflip directory and run "docker-compose up"
