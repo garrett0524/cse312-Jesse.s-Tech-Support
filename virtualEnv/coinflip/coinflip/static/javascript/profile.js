@@ -11,17 +11,24 @@ document.getElementById('pictureUpload').addEventListener('change', function(e) 
     reader.readAsDataURL(file);
 });
 
-// Function to handle uploading the profile picture to the backend 
+// Function to handle uploading the profile picture to the backend
 function uploadProfilePicture(file) {
-  var formData = new FormData();
-  var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-  formData.append('profile_picture', file);
+    var maxSize = 2 * 1024 * 1024; // 2 MB in bytes
 
-  // Send the file to the backend with AJAX
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/upload_profile_picture/', true); // Update the URL to the backend endpoint
-  xhr.setRequestHeader("X-CSRFToken", csrftoken);
-  xhr.send(formData);
+    if (file.size > maxSize) {
+        alert("File size exceeds the limit of 2 MB. Please choose a smaller file.");
+        return;
+    }
+
+    var formData = new FormData();
+    var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    formData.append('profile_picture', file);
+
+    // Send the file to the backend with AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload_profile_picture/', true);
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    xhr.send(formData);
 }
   
   function editProfile() {
