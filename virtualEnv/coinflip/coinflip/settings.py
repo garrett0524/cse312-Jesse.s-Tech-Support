@@ -37,6 +37,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['flipduel.me', '68.183.20.140']
 
+CSRF_TRUSTED_ORIGINS = ['https://flipduel.me']
+
 
 # Application definition
 
