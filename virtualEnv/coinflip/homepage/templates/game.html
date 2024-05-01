@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
   <div class="container">
     <h1>Coinflip Duel</h1>
     <div class="balance">
-      <p>Your Balance: {{ user.userprofile.currency }}</p>
+      <p>Your Balance: ${{ user.userprofile.currency|intcomma }}</p>
     </div>
     <div class="game-list">
       <h2>Game List</h2>
