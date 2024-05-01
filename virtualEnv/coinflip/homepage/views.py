@@ -126,6 +126,10 @@ def create_game(request):
         if request.user.is_authenticated:
             side = request.POST.get('side')
             bet = int(request.POST.get('bet'))
+            if bet < 0:
+                error_message = "Invalid bet amount."
+                return render(request, 'create_game.html', {'error_message': error_message})
+            
             user_profile = request.user.userprofile
             if user_profile.currency >= bet:
                 player = Player.objects.create(user_profile=user_profile, side=side)
