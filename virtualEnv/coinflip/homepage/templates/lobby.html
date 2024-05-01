@@ -49,7 +49,6 @@
             console.log('Received data:', event.data);
             const game = JSON.parse(event.data);
             
-    
             if (game.type === 'send_game_list') {
                 const gameList = document.getElementById('game-list');
                 gameList.innerHTML = '';
@@ -58,15 +57,26 @@
                     li.style.color = '#FFF';
                     li.innerHTML = `
                         Game ID: ${game.id}<br>
-                        Player: ${game.player1_id}<br>
+                        Player: <span id="player-${game.id}"></span><br>
                         Bet: ${game.bet}<br>
                         <button onclick="window.location.href='/play_game/${game.id}/'">Play</button>
                     `;
                     gameList.appendChild(li);
+
+                    // Retrieve the player's username from the server
+                    fetch(`/get_player_username/${game.player1_id}/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const playerSpan = document.getElementById(`player-${game.id}`);
+                            playerSpan.textContent = data.username;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching player username:', error);
+                        });
                 });
                 reloadUserData();
             }
-                else if (game.type === 'send_user_data' && game.user_id === userId) {
+            else if (game.type === 'send_user_data' && game.user_id === userId) {
                 // Update the user's balance, wins, and losses
                 const balanceElement = document.getElementById('balance');
                 balanceElement.textContent = `Balance: ${game.balance}`;
@@ -79,7 +89,6 @@
             }
         };
             
-        
         socket.onclose = function(event) {
             console.log('WebSocket connection closed');
         };

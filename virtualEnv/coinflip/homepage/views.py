@@ -111,6 +111,10 @@ def create_game(request):
         if request.user.is_authenticated:
             side = request.POST.get('side')
             bet = int(request.POST.get('bet'))
+            if bet < 0:
+                error_message = "Invalid bet amount."
+                return render(request, 'create_game.html', {'error_message': error_message})
+
             user_profile = request.user.userprofile
             if user_profile.currency >= bet:
                 player = Player.objects.create(user_profile=user_profile, side=side)
@@ -179,21 +183,16 @@ def play_game(request, game_id):
                 game.player2.user_profile.save()
                 game.completed = True
                 game.save()
-                
                 # Get the updated balance data for both players
                 player1_balance = game.player1.user_profile.currency
                 player2_balance = game.player2.user_profile.currency
-                
                 # Trigger the real-time update for the balances
                 update_balance(game.player1.user_profile.user.id, player1_balance)
                 update_balance(game.player2.user_profile.user.id, player2_balance)
-                
                 # Get the updated game list data
                 game_list_data = Game.objects.filter(completed=False).values()
-                
                 # Trigger the real-time update for the game list
                 update_game_list(game_list_data)
-                
                 return render(request, 'play_game.html', {'game': game, 'result': result})
             else:
                 return render(request, 'play_game.html', {'game': game})
@@ -213,3 +212,8 @@ def get_user_data(request):
         return JsonResponse(data)
     else:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
+
+def get_player_username(request, player1_id):
+    player = Player.objects.get(id=player1_id)
+    username = player.user_profile.user.username
+    return JsonResponse({'username': username})

@@ -8,16 +8,18 @@
 <body>
     <img src="{% static 'images/coin.png' %}" alt="Coinflip Image" class="top-image">
     <h1 id="heading">Play Game</h1>
-    
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
     {% if not game.completed %}
         {% if game.player1.user_profile.user != user %}
             <p>Game ID: {{ game.id }}</p>
             <p>Player 1: {{ game.player1.user_profile.user.username }}</p>
             <p>Side: {{ game.player1.side }}</p>
             <p>Bet: {{ game.bet }}</p>
-            
             <div id="countdown" style="color: #FFF;">3</div>
-            
             <button id="play-button">Play</button>
         {% else %}
             <p>You cannot play your own game.</p>
@@ -36,26 +38,26 @@
             <button onclick="window.location.href='/lobby'">Back to Lobby</button>
         {% endif %}
     {% endif %}
-    
+
     <script>
         var countdownElement = document.getElementById('countdown');
         var playButton = document.getElementById('play-button');
         var countdown = 3;
-        
+
         playButton.addEventListener('click', function() {
             playButton.disabled = true;
-            
+
             var countdownInterval = setInterval(function() {
                 countdown--;
                 countdownElement.textContent = countdown;
-                
+
                 if (countdown === 0) {
                     clearInterval(countdownInterval);
                     playGame();
                 }
             }, 1000);
         });
-        
+
         function playGame() {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
