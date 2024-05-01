@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,7 @@
     
     {% if user.is_authenticated %}
         <p>Welcome, {{ user.username }}!</p>
-        <p id="balance">Balance: {{ user.userprofile.currency }}</p>
+        <p id="balance">Balance: ${{ user.userprofile.currency|intcomma }}</p>
         <p id="wins">Wins: {{ user.userprofile.wins }}</p>
         <p id="losses">Losses: {{ user.userprofile.loses }}</p>
         <button onclick="window.location.href='/create_game'">Create New Game</button><br><br>
@@ -23,7 +24,7 @@
                     Game ID: {{ game.id }}<br>
                     Player: {{ game.player1.user_profile.user.username }}<br>
                     Side: {{ game.player1.side }}<br>
-                    Bet: {{ game.bet }}<br>
+                    Bet: ${{ game.bet|intcomma }}<br>
                     <button onclick="window.location.href='/play_game/{{ game.id }}/'">Play</button>
                 </li>
             {% endfor %}
@@ -58,7 +59,7 @@
                     li.innerHTML = `
                         Game ID: ${game.id}<br>
                         Player: <span id="player-${game.id}"></span><br>
-                        Bet: ${game.bet}<br>
+                        Bet: $${formatCurrency(game.bet)}<br>
                         <button onclick="window.location.href='/play_game/${game.id}/'">Play</button>
                     `;
                     gameList.appendChild(li);
@@ -79,7 +80,7 @@
             else if (game.type === 'send_user_data' && game.user_id === userId) {
                 // Update the user's balance, wins, and losses
                 const balanceElement = document.getElementById('balance');
-                balanceElement.textContent = `Balance: ${game.balance}`;
+                balanceElement.textContent = `Balance: $${formatCurrency(game.balance)}`;
 
                 const winsElement = document.getElementById('wins');
                 winsElement.textContent = `Wins: ${game.wins}`;
@@ -101,7 +102,7 @@
                     // Update the balance element
                     const balanceElement = document.getElementById('balance');
                     if (balanceElement) {
-                        balanceElement.textContent = `Balance: ${data.balance}`;
+                        balanceElement.textContent = `Balance: $${formatCurrency(data.balance)}`;
                     }
 
                     // Update the wins element
@@ -119,6 +120,11 @@
                 .catch(error => {
                     console.error('Error fetching user data:', error);
                 });
+        }
+
+        // Function to format currency with commas and a dollar sign
+        function formatCurrency(amount) {
+            return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         }
     </script>
 </body>

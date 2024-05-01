@@ -71,6 +71,10 @@ def chat_messages(request):
 
 def profile_view(request):
     user = request.user
+    if request.method == 'POST':
+        bio = request.POST.get('bio', '')
+        user.userprofile.bio = bio[:200]  # Truncate the bio to 200 characters
+        user.userprofile.save()
     return render(request, 'profile.html', {'user': user})
 
 def game_view(request):

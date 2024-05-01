@@ -20,19 +20,9 @@ function uploadProfilePicture(file) {
   xhr.send(formData);
 }
 
-// Function to open the bio modal
-function openModal() {
-  document.getElementById('bioModal').style.display = 'block';
-}
-
-// Function to close the bio modal
-function closeModal() {
-  document.getElementById('bioModal').style.display = 'none';
-}
-
 // Function to save the user's bio
 function saveBio() {
-  var bio = document.getElementById('bioInput').value;
+  var bio = document.getElementById('bio').value;
   // Send the bio to the backend with AJAX
   var xhr = new XMLHttpRequest();
   var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -41,8 +31,7 @@ function saveBio() {
   xhr.setRequestHeader('X-CSRFToken', csrftoken);
   xhr.onload = function() {
       if (xhr.status === 200) {
-          document.getElementById('bio').textContent = bio;
-          closeModal();
+          console.log('Bio saved successfully');
       }
   };
   xhr.send('bio=' + encodeURIComponent(bio));
