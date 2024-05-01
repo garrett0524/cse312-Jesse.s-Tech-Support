@@ -59,7 +59,7 @@
                     li.innerHTML = `
                         Game ID: ${game.id}<br>
                         Player: <span id="player-${game.id}"></span><br>
-                        Bet: $${formatCurrency(game.bet)}<br>
+                        Bet: ${formatCurrency(game.bet)}<br>
                         <button onclick="window.location.href='/play_game/${game.id}/'">Play</button>
                     `;
                     gameList.appendChild(li);
