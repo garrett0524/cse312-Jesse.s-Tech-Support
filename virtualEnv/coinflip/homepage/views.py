@@ -10,8 +10,10 @@ from .models import Chat_Data, UserProfile, Player, Game
 from .realtime import update_game_list, update_balance
 from .forms import ProfilePictureForm
 from django.views.decorators.csrf import csrf_exempt
+from django_ratelimit.decorators import ratelimit
+# from django.http import Http404, HttpResponse, HttpResponseForbidden
 
-
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def homepage(request):
     return render(request, "starterHTML.html", {'user': request.user})
 
@@ -25,6 +27,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -39,10 +42,13 @@ def login(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL)
 def logout_view(request):
     logout(request)
     return redirect('homepage')
 
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -54,7 +60,9 @@ def login_view(request):
             response = redirect('homepage')
             response.set_cookie('auth_token', token, httponly=True)
             return response
+        
 
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def chat(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -65,10 +73,14 @@ def chat(request):
     else:
         return render(request, "chat.html")
 
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def chat_messages(request):
     messages = Chat_Data.objects.all().values('user', 'message')
     return JsonResponse(list(messages), safe=False)
 
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def profile_view(request):
     user = request.user
     if request.method == 'POST':
@@ -77,9 +89,13 @@ def profile_view(request):
         user.userprofile.save()
     return render(request, 'profile.html', {'user': user})
 
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def game_view(request):
     return render(request, 'game.html')
 
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def lobby_view(request):
     if request.user.is_authenticated:
         available_games = Game.objects.filter(player2=None, completed=False)
@@ -97,6 +113,8 @@ def lobby_view(request):
     else:
         return redirect('/login')
 
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def upload_profile_picture(request):
     if request.method == 'POST':
         form = ProfilePictureForm(request.POST, request.FILES)
@@ -109,7 +127,9 @@ def upload_profile_picture(request):
             return JsonResponse({'error': 'Invalid form data'}, status=400)
     else:
         return JsonResponse({'error': 'Not a valid POST request'}, status=400)
-    
+
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)   
 def create_game(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -141,6 +161,8 @@ def create_game(request):
     else:
         return render(request, 'create_game.html')
 
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def game_list(request):
     if request.user.is_authenticated:
         available_games = Game.objects.filter(player2=None, completed=False)
@@ -157,7 +179,9 @@ def game_list(request):
         return render(request, 'game_list.html', context)
     else:
         return redirect('/login')
-    
+
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)   
 def play_game(request, game_id):
     game = get_object_or_404(Game, id=game_id)
     if request.method == 'POST':
@@ -204,7 +228,9 @@ def play_game(request, game_id):
             return redirect('/login')
     else:
         return render(request, 'play_game.html', {'game': game})
-    
+
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def get_user_data(request):
     if request.user.is_authenticated:
         user_profile = request.user.userprofile
@@ -217,7 +243,14 @@ def get_user_data(request):
     else:
         return JsonResponse({'error': 'User not authenticated'}, status=401)
 
+
+@ratelimit(key='ip',rate='50/10s', method=ratelimit.ALL, block=True)
 def get_player_username(request, player1_id):
     player = Player.objects.get(id=player1_id)
     username = player.user_profile.user.username
     return JsonResponse({'username': username})
+
+#NOTE - returns the html page in coinflip/templates  with the status of 429 
+def ratelimited_error(request):
+    return render(request, 'ratelimited.html', status=429)
+

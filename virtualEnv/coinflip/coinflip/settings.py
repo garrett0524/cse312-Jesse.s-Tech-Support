@@ -63,9 +63,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'coinflip.middleware.nosniff_middleware.NoSniffMiddleware',
     'coinflip.middleware.static_nosniff_middleware.StaticNoSniffMiddleware',
+    'ratelimit.middleware.RatelimitMiddleware',
 ]
 
 ROOT_URLCONF = 'coinflip.urls'
+
+RATELIMIT_VIEW = 'coinflip.views.ratelimited_error'
 
 TEMPLATES = [
     {
