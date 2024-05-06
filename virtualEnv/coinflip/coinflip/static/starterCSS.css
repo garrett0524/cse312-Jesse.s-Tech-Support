@@ -72,3 +72,8 @@ li {
 .profile-link:visited {
     color: #FFF; /* Set the text color for visited links */
 }
+
+.profile-link:hover:visited {
+    color: #ffd500; /* Set the text color on hover */
+    text-decoration: underline; /* Add an underline on hover if desired */
+}
