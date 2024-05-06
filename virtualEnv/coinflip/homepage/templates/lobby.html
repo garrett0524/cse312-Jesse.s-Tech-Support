@@ -22,7 +22,7 @@
             {% for game in games %}
                 <li style="color: #FFF;">
                     Game ID: {{ game.id }}<br>
-                    Player: {{ game.player1.user_profile.user.username }}<br>
+                    Player: <a href="{% url 'user_profile' game.player1.user_profile.user.username %}" class="profile-link">{{ game.player1.user_profile.user.username }}</a><br>
                     Side: {{ game.player1.side }}<br>
                     Bet: ${{ game.bet|intcomma }}<br>
                     <button onclick="window.location.href='/play_game/{{ game.id }}/'">Play</button>

@@ -1,0 +1,33 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'profileCSS.css' %}">
+</head>
+<body>
+    <div class="container">
+        {% if error %}
+            <h2>{{ error }}</h2>
+        {% else %}
+            <h1>Profile Page</h1>
+            <div class="profile-info">
+                <div class="profile-picture">
+                    <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile Picture" id="profilePicture">
+                </div>
+                <h2 id="username">{{ user.username }}</h2>
+                <p id="bio">{{ user.userprofile.bio }}</p>
+            </div>
+            <div class="stats">
+                <h3>Stats</h3>
+                <p>Currency: ${{ user.userprofile.currency|intcomma }}</p>
+                <p>Wins: {{ user.userprofile.wins }}</p>
+                <p>Losses: {{ user.userprofile.loses }}</p>
+            </div>
+        {% endif %}
+        <button onclick="window.location.href='/lobby'">Back to Lobby</button>
+        <button onclick="window.location.href='/'">Back to Home</button>
+    </div>
+</body>
+</html>

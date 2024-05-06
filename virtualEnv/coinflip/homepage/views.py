@@ -10,6 +10,7 @@ from .models import Chat_Data, UserProfile, Player, Game
 from .realtime import update_game_list, update_balance, update_free_money_balance
 from .forms import ProfilePictureForm
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 
 
 def homepage(request):
@@ -246,3 +247,11 @@ def free_money(request):
         return render(request, 'free_money.html')
     else:
         return redirect('/login')
+
+def user_profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return render(request, 'user_profile.html', {'error': 'User does not exist'})
+
+    return render(request, 'user_profile.html', {'user': user})
