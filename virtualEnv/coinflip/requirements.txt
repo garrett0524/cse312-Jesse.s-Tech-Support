@@ -5,3 +5,4 @@ python-decouple
 channels
 channels-redis
 whitenoise
+django-redis
