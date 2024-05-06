@@ -1,4 +1,4 @@
-import secrets, json, random
+import secrets, json, random, time
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
@@ -7,11 +7,12 @@ from django.contrib.auth import logout,authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.utils.html import escape  
 from .models import Chat_Data, UserProfile, Player, Game
-from .realtime import update_game_list, update_balance
+from .realtime import update_game_list, update_balance, update_free_money_balance
 from .forms import ProfilePictureForm
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.models import User
 
 
 def homepage(request):
@@ -237,3 +238,36 @@ def get_player_username(request, player1_id):
     player = Player.objects.get(id=player1_id)
     username = player.user_profile.user.username
     return JsonResponse({'username': username})
+
+def free_money(request):
+    if request.user.is_authenticated:
+        user_profile = request.user.userprofile
+        
+        if request.method == 'POST':
+            last_claim_time = request.session.get('last_claim_time', 0)
+            current_time = time.time()
+            
+            if current_time - last_claim_time >= 5:  # Check if 5 seconds have passed since the last claim
+                user_profile.currency += 10000
+                user_profile.save()
+                request.session['last_claim_time'] = current_time
+                
+                # Trigger the real-time update for the balance
+                update_free_money_balance(request.user.id, user_profile.currency)
+                
+                return JsonResponse({'success': True, 'message': 'You have earned $10,000!', 'cooldown': 5})
+            else:
+                remaining_time = int(5 - (current_time - last_claim_time))
+                return JsonResponse({'success': False, 'message': f'Please wait {remaining_time} seconds before claiming again.', 'cooldown': remaining_time})
+        
+        return render(request, 'free_money.html')
+    else:
+        return redirect('/login')
+
+def user_profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return render(request, 'user_profile.html', {'error': 'User does not exist'})
+
+    return render(request, 'user_profile.html', {'user': user})

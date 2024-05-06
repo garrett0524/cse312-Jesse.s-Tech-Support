@@ -35,3 +35,14 @@ def update_user_data(user_id, balance_data, wins_data, losses_data):
             'losses': losses_data,
         }
     )
+
+def update_free_money_balance(user_id, balance_data):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        f'free_money_{user_id}',
+        {
+            'type': 'send_user_data',
+            'user_id': user_id,
+            'balance': balance_data,
+        }
+    )

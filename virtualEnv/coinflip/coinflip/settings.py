@@ -65,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'coinflip.middleware.nosniff_middleware.NoSniffMiddleware',
     'coinflip.middleware.static_nosniff_middleware.StaticNoSniffMiddleware',
+    'coinflip.middleware.middlewareRateLimit.RateLimitMiddleware',
 ]
 
 ROOT_URLCONF = 'coinflip.urls'
@@ -84,6 +85,16 @@ TEMPLATES = [
         },
     },
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 
 
 CHANNEL_LAYERS = {
