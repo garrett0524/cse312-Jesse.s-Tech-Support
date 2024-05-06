@@ -58,3 +58,17 @@ ul {
 li {
     color: #FFF !important;
 }
+
+.profile-link {
+    color: #FFF; /* Set the text color to white */
+    text-decoration: none; /* Remove the default underline */
+}
+
+.profile-link:hover {
+    color: #ffd500; /* Set the text color on hover */
+    text-decoration: underline; /* Add an underline on hover if desired */
+}
+
+.profile-link:visited {
+    color: #FFF; /* Set the text color for visited links */
+}

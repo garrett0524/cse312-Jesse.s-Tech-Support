@@ -70,7 +70,7 @@
     
     <script src="{% static 'javascript/starter.js' %}"></script>
     <script>
-        const socket = new WebSocket('ws://' + window.location.host + '/ws/free-money/{{ user.id }}/');
+        const socket = new WebSocket('wss://' + window.location.host + '/ws/free-money/{{ user.id }}/');
         const userId = "{{ user.id }}";
         const moneyBag = document.getElementById('money-bag');
         const targetArea = document.getElementById('target-area');
