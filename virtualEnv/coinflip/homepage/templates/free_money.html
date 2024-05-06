@@ -39,6 +39,20 @@
             font-size: 18px;
             color: #888;
         }
+        
+        #user-list {
+            margin-top: 20px;
+            color: #FFF;
+        }
+        
+        #farming-users {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        #farming-users li {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +76,11 @@
             Cooldown: <span id="cooldown-seconds">0</span> seconds
         </div>
         
+        <div id="user-list">
+            <h3>Farming Users:</h3>
+            <ul id="farming-users"></ul>
+        </div>
+        
         <button onclick="window.location.href='/lobby'">Back to Lobby</button><br><br>
     {% else %}
         <p>Please login to claim free money.</p>
@@ -79,6 +98,7 @@
         const cooldownSeconds = document.getElementById('cooldown-seconds');
         
         let cooldownInterval;
+        const farmingUsers = {};
         
         socket.onopen = function(event) {
             console.log('WebSocket connection established');
@@ -88,10 +108,26 @@
             console.log('Received data:', event.data);
             const data = JSON.parse(event.data);
             
-            if (data.type === 'send_user_data' && data.user_id === parseInt(userId)) {
-                // Update the user's balance
-                const balanceElement = document.getElementById('balance');
-                balanceElement.textContent = `Balance: ${formatCurrency(data.balance)}`;
+            if (data.type === 'initial_state') {
+                // Initialize the farmingUsers object with the initial state
+                for (const userId in data.farming_users) {
+                    farmingUsers[userId] = {
+                        username: data.farming_users[userId].username,
+                        startTime: data.farming_users[userId].start_time,
+                        timer: null
+                    };
+                }
+                updateFarmingUsers();
+            } else if (data.type === 'user_join') {
+                farmingUsers[data.user_id] = {
+                    username: data.username,
+                    startTime: data.start_time,
+                    timer: null
+                };
+                updateFarmingUsers();
+            } else if (data.type === 'user_leave') {
+                delete farmingUsers[data.user_id];
+                updateFarmingUsers();
             }
         };
         
@@ -149,9 +185,38 @@
             }
         }
         
-        // Function to format currency with commas and a dollar sign
-        function formatCurrency(amount) {
-            return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        function updateFarmingUsers() {
+            const farmingUsersList = document.getElementById('farming-users');
+            farmingUsersList.innerHTML = '';
+            
+            for (const userId in farmingUsers) {
+                const farmingTime = formatTime(new Date().getTime() - farmingUsers[userId].startTime);
+                const listItem = document.createElement('li');
+                listItem.textContent = `${farmingUsers[userId].username}: ${farmingTime}`;
+                farmingUsersList.appendChild(listItem);
+                
+                clearInterval(farmingUsers[userId].timer);
+                farmingUsers[userId].timer = setInterval(() => {
+                    const updatedFarmingTime = formatTime(new Date().getTime() - farmingUsers[userId].startTime);
+                    listItem.textContent = `${farmingUsers[userId].username}: ${updatedFarmingTime}`;
+                }, 1000);
+            }
+        }
+        
+        function formatTime(milliseconds) {
+            const seconds = Math.floor(milliseconds / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            
+            const formattedSeconds = seconds % 60;
+            const formattedMinutes = minutes % 60;
+            const formattedHours = hours;
+            
+            return `${padZero(formattedHours)}:${padZero(formattedMinutes)}:${padZero(formattedSeconds)}`;
+        }
+        
+        function padZero(number) {
+            return number.toString().padStart(2, '0');
         }
     </script>
 </body>
