@@ -1,0 +1,158 @@
+{% load static %} {% load humanize %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coinflip - Free Money</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'starterCSS.css' %}">
+    <style>
+        #money-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            border: 2px dashed #ccc;
+            margin-bottom: 20px;
+        }
+        
+        #money-bag {
+            width: 100px;
+            height: 100px;
+            background-image: url("{% static 'images/coin.png' %}");
+            background-size: cover;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+        }
+        
+        #target-area {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #ccc;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <img src="{% static 'images/coin.png' %}" alt="Coinflip Image" class="top-image">
+    <h1 id="heading">Free Money</h1>
+    
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <p id="balance">Balance: ${{ user.userprofile.currency|intcomma }}</p>
+        
+        <p>Drag the money bag to the target area to claim $10,000!</p>
+        
+        <div id="money-container">
+            <div id="money-bag" draggable="true"></div>
+            <div id="target-area">Drop here</div>
+        </div>
+        
+        <p id="message"></p>
+        
+        <div id="cooldown-timer" style="display: none; color: #FFF;">
+            Cooldown: <span id="cooldown-seconds">0</span> seconds
+        </div>
+        
+        <button onclick="window.location.href='/lobby'">Back to Lobby</button><br><br>
+    {% else %}
+        <p>Please login to claim free money.</p>
+        <button onclick="window.location.href='/login'">Login</button><br><br>
+    {% endif %}
+    
+    <script src="{% static 'javascript/starter.js' %}"></script>
+    <script>
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/free-money/{{ user.id }}/');
+        const userId = "{{ user.id }}";
+        const moneyBag = document.getElementById('money-bag');
+        const targetArea = document.getElementById('target-area');
+        const message = document.getElementById('message');
+        const cooldownTimer = document.getElementById('cooldown-timer');
+        const cooldownSeconds = document.getElementById('cooldown-seconds');
+        
+        let cooldownInterval;
+        
+        socket.onopen = function(event) {
+            console.log('WebSocket connection established');
+        };
+        
+        socket.onmessage = function(event) {
+            console.log('Received data:', event.data);
+            const data = JSON.parse(event.data);
+            
+            if (data.type === 'send_user_data' && data.user_id === parseInt(userId)) {
+                // Update the user's balance
+                const balanceElement = document.getElementById('balance');
+                balanceElement.textContent = `Balance: ${formatCurrency(data.balance)}`;
+            }
+        };
+        
+        socket.onclose = function(event) {
+            console.log('WebSocket connection closed');
+        };
+        
+        moneyBag.addEventListener('dragstart', function(event) {
+            event.dataTransfer.setData('text/plain', event.target.id);
+        });
+        
+        targetArea.addEventListener('dragover', function(event) {
+            event.preventDefault();
+        });
+        
+        targetArea.addEventListener('drop', function(event) {
+            event.preventDefault();
+            const moneyBagId = event.dataTransfer.getData('text');
+            
+            if (moneyBagId === 'money-bag') {
+                fetch('/free_money/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        message.textContent = data.message;
+                        moneyBag.style.left = '0';
+                        moneyBag.draggable = false;
+                        cooldownTimer.style.display = 'block';
+                        cooldownSeconds.textContent = data.cooldown;
+                        
+                        cooldownInterval = setInterval(updateCooldown, 1000);
+                    } else {
+                        message.textContent = data.message;
+                    }
+                });
+            }
+        });
+        
+        function updateCooldown() {
+            let seconds = parseInt(cooldownSeconds.textContent);
+            seconds--;
+            
+            if (seconds <= 0) {
+                clearInterval(cooldownInterval);
+                moneyBag.draggable = true;
+                cooldownTimer.style.display = 'none';
+            } else {
+                cooldownSeconds.textContent = seconds;
+            }
+        }
+        
+        // Function to format currency with commas and a dollar sign
+        function formatCurrency(amount) {
+            return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        }
+    </script>
+</body>
+</html>

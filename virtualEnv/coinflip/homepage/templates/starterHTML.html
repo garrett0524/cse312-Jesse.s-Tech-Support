@@ -20,7 +20,6 @@
         <button onclick="window.location.href='/login'">Login</button><br><br>
     {% endif %}
     
-    <button onclick="changeColor('heading', 'yellow')">Click Me!</button><br><br>
     
     <p>Logged in as: {% if user.is_authenticated %}{{ user.username }}{% else %}Not Logged In{% endif %}</p>
     
