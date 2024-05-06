@@ -8,7 +8,7 @@ https://flipduel.me/
 - Navigate to the /virtualEnv/coinflip directory and run "docker-compose up"
 
 ## Objective 1 & 2 Note:
-- Objective 1 is in our Play feature, where it says "Farm Money". Timing is set via cooldown to avoid spamming the farm + Active Farmers List showed to everyone (Inital 4 Second Bug)
+- Objective 1 is in our Play feature, where it says "Farm Money". Timing is set via cooldown to avoid spamming the farm + Active Farmers List showed to everyone (Inital 4 Second Bug due to a difference in the server-side and client-side timing)
 - Objective 2 DoS Protection triggers after 50 refreshes, each page load only counts as 1 request.
 ## Objective 3:
 For this objective we have added the ability to view the profiles of other users in the game list!
