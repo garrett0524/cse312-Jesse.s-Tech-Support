@@ -17,7 +17,7 @@
         <p id="losses">Losses: {{ user.userprofile.loses }}</p>
         <button onclick="window.location.href='/create_game'">Create New Game</button><br><br>
         
-        <h2>Game List</h2>
+        <h2 style="color: #FFF;">Game List</h2>
         <ul id="game-list" class="game-list">
             {% for game in games %}
                 <li style="color: #FFF;">
@@ -29,7 +29,7 @@
                 </li>
             {% endfor %}
         </ul>
-        
+        <button onclick="window.location.href='/free_money'">Farm Money</button><br><br>
         <button onclick="window.location.href='/'">Back to Homepage</button><br><br>
     {% else %}
         <p>Please login to access the game list.</p>
